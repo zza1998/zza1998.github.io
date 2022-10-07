@@ -1,0 +1,797 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.ai2db.cn/icon-bg.png">
+  <link rel="icon" href="https://cdn.ai2db.cn/icon-bg.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="zza">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="大纲主要是使用AI技术 如机器学习、深度学习等对数据库的调优参数进行学习以完成达到自动调优的目标，降低对云数据库中大量数据库人工难以维护的场景。 机器学习劣势1、用管道架构来训练，模型在不同的场景表现时好时坏 2、训练模型需要巨大的高质量数据，有很多场景无法复现 3、不能很好的支持多参数的调优，因为场景太多了 强化学习数据库-Env 内部指标-State 调优模型-Agent-采用神经网络进行模拟">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文AI4DB">
+<meta property="og:url" content="https://ai2db.cn/2022/05/28/%E8%AE%BA%E6%96%87AI4DB/index.html">
+<meta property="og:site_name" content="个人学习服务器">
+<meta property="og:description" content="大纲主要是使用AI技术 如机器学习、深度学习等对数据库的调优参数进行学习以完成达到自动调优的目标，降低对云数据库中大量数据库人工难以维护的场景。 机器学习劣势1、用管道架构来训练，模型在不同的场景表现时好时坏 2、训练模型需要巨大的高质量数据，有很多场景无法复现 3、不能很好的支持多参数的调优，因为场景太多了 强化学习数据库-Env 内部指标-State 调优模型-Agent-采用神经网络进行模拟">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.ai2db.cn/img__2022-06-07_675432">
+<meta property="article:published_time" content="2022-05-28T01:58:52.000Z">
+<meta property="article:modified_time" content="2022-10-07T13:41:22.880Z">
+<meta property="article:author" content="zza">
+<meta property="article:tag" content="论文">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.ai2db.cn/img__2022-06-07_675432">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>论文AI4DB - 个人学习服务器</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"ai2db.cn","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>zza&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://cdn.ai2db.cn/girl_1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="论文AI4DB"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-05-28 09:58" pubdate>
+          2022年5月28日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">论文AI4DB</h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h1><p>主要是使用AI技术 如机器学习、深度学习等对数据库的调优参数进行学习以完成达到自动调优的目标，降低对云数据库中大量数据库人工难以维护的场景。</p>
+<h2 id="机器学习劣势"><a href="#机器学习劣势" class="headerlink" title="机器学习劣势"></a>机器学习劣势</h2><p>1、用管道架构来训练，模型在不同的场景表现时好时坏</p>
+<p>2、训练模型需要巨大的高质量数据，有很多场景无法复现</p>
+<p>3、不能很好的支持多参数的调优，因为场景太多了</p>
+<h2 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h2><p>数据库-Env</p>
+<p>内部指标-State</p>
+<p>调优模型-Agent-采用神经网络进行模拟</p>
+<p>调优行为-Action</p>
+<p>表现变化-Reward</p>
+<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><p>强化学习和传统的监督学习不同，并不需要大量的高质量数据，使用action来对调优策略进行优化</p>
+<h3 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h3><p>只能提供粗略的调优 负载 不能做到细致调优 特别的查询</p>
+<p>QTune 就是用来解决这个问题的 它使用了双状态的深度学习模型既有action也有workload</p>
+<p>它可以在按集群在相同集群推荐一样的参数 </p>
+<h2 id="缓存调整"><a href="#缓存调整" class="headerlink" title="缓存调整"></a>缓存调整</h2><p>iBTune 采用深度学习调整缓存池大小 </p>
+<p>用来针对个人的数据库实例 用来调整优化确保最小的数据库查询时延和吞吐</p>
+<p>他主要采用的是成对的神经网络去预测延迟上界，输入包括当前数据库实例，调整缓存池大小后的数据库实例，每一个都包含了如CPU IO和当前时间的指标输出的是预期的响应时间。</p>
+<p>如果预测的延迟太大就会进行调整内存大小</p>
+<h2 id="索引自动选择"><a href="#索引自动选择" class="headerlink" title="索引自动选择"></a>索引自动选择</h2><p>文章讲述了索引在人工情况下选择和调整的不便，如果使用机器学习算法进行动态变化选取最优策略可以提升查询性能</p>
+<p>AutoAdmin用来选取索引，使用枚举全部可加索引行，进行选取最高收益查询的K个，然后利用贪婪算法逐步的添加列不超过threshold</p>
+<p>DB2把选择索引当做背包问题来解决，索引item是背包 获得的收益是背包重量</p>
+<p>离线选择缺点：</p>
+<ul>
+<li>当系统的负载出现变化时候不能很好的调整，并且选择需要一定的经验，增加了负担</li>
+</ul>
+<h2 id="视图的自动生成"><a href="#视图的自动生成" class="headerlink" title="视图的自动生成"></a>视图的自动生成</h2><p>工具：View Advisor</p>
+<p>主要有两点：1、候选视图的生成 2、视图的选择</p>
+<p>视图生成</p>
+<p>Dokeroglu 通过遗传算法辨别出公共常用的子查询进行视图生成最大化查询效率</p>
+<p>Zilio 为解决通用化子查询的问题合并查询的条件 和相似的视图让同一个视图可以被更多查询使用</p>
+<p>视图选择</p>
+<p>视图选择工作量很大是个NP问题，需要选择最小的cost</p>
+<p>Jindal提出BIGSUBS 分两步迭代 </p>
+<ul>
+<li>第一步：使用和基因算法中的变异操作类似的方法判定是否选择实例化该视图，根据视图耗费内存和视图能够减少查询的效能来判断</li>
+<li>第二步 给每个查询进行评估使用哪个视图 并反馈给算法留在下一次迭代</li>
+</ul>
+<p>最后超过限定的迭代次数或者视图的对应已经不再变化</p>
+<p>CLOUDVIEWS 使用于在线的分析，把选择视图看做是背包问题，但是主要作用于已经出现的负载对新发生的不能很好的运用</p>
+<h2 id="SQL重写"><a href="#SQL重写" class="headerlink" title="SQL重写"></a>SQL重写</h2><p>传统SQL重写基于事先规则设定。而此处提出可以结合机器学习进行评估选择规则,并且用于训练新的场景。</p>
+<h2 id="join-顺序选择"><a href="#join-顺序选择" class="headerlink" title="join 顺序选择"></a>join 顺序选择</h2><p>传统方法使用的dp算法进行选择，有较大的代价和较高的错误率</p>
+<p>使用机器学习进行学习先前经验克服bias 其中又分为在线和离线</p>
+<p>线下：</p>
+<ul>
+<li>LEO ，使用了一个两层的方法进行预估第一层是从数据库统计的信息，第二层是从过去执行分析的系统目录，然后再执行后对原先的参数和系统目录进行调整</li>
+</ul>
+<h2 id="数据库监控系统"><a href="#数据库监控系统" class="headerlink" title="数据库监控系统"></a>数据库监控系统</h2><ul>
+<li>数据库健康监控<ul>
+<li>他们认为有相似key的间歇性数据库的慢查询有一样的根本原因，所以他们先把失败的记录汇总，分配每一种一个原因，当出现慢sql时进行匹配，匹配到了就通知DBA，每一匹配到就再生成一种</li>
+<li>P-Store, 采用主动的去监控数据库来适应变化</li>
+</ul>
+</li>
+<li>数据库活动监控<ul>
+<li>为了自动化的选择一些活动，而不是每次都触发造成大量数据库和监控系统的交互，Hagit提出了MAB(multi-armed bandits )  训练个策略获取到最大的风险分值 并且追踪</li>
+</ul>
+</li>
+<li>数据库表现预测<ul>
+<li>Marcus等人提出用深度学习来进行预测并发查询场景，包括父子操作之间或者平行计划，但由于采用了pipeline结构导致了数据丢失</li>
+<li>周等人提出嵌入式图算法，使用图模型来特征化并发的查询，顶点是操作者，边是关系</li>
+</ul>
+</li>
+</ul>
+<h2 id="数据库安全"><a href="#数据库安全" class="headerlink" title="数据库安全"></a>数据库安全</h2><ul>
+<li>数据库敏感数据发现<ul>
+<li>传统通过用户定义的来取一个个发现过于麻烦工作量大，Bhaskar等人提出使用拉普拉斯模型进行根据数据调用的频率作为候选，再加上一定的噪声提高准确率</li>
+</ul>
+</li>
+<li>访问控制<ul>
+<li>传统的根据一定规则的限制很可能被先进的技术所破解攻击，Colombo等人提出基于意图的访问控制模型，自动化控制策略来访问数据</li>
+</ul>
+</li>
+<li>SQL注入<ul>
+<li>sql注入一直是数据库的具有危害性的问题，</li>
+<li>Moises等人提出基于分类算法来检查SQL注入，训练样本使用sql注入的sql进行查询然后分级别分类。然而这个方法需要大量的训练数据并且不能泛化</li>
+<li>Batista等人提出基于模糊神经网络用来辨别攻击的模式然后记住，</li>
+</ul>
+</li>
+</ul>
+<h2 id="模型推理的数据库技术"><a href="#模型推理的数据库技术" class="headerlink" title="模型推理的数据库技术"></a>模型推理的数据库技术</h2><ul>
+<li>操作者支持</li>
+<li>操作者选择</li>
+<li>执行增强</li>
+</ul>
+<h2 id="目前的挑战"><a href="#目前的挑战" class="headerlink" title="目前的挑战"></a>目前的挑战</h2><h2 id="不理解的点"><a href="#不理解的点" class="headerlink" title="不理解的点"></a>不理解的点</h2><ul>
+<li>OtterTune是什么意思</li>
+</ul>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AE%BA%E6%96%87/">#论文</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>论文AI4DB</div>
+      <div>https://ai2db.cn/2022/05/28/论文AI4DB/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>zza</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年5月28日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/02/specialized-hardware-solutions/" title="specialized hardware solutions">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">specialized hardware solutions</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/05/06/ml-learning-01/" title="ml-learning-network">
+                        <span class="hidden-mobile">ml-learning-network</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=浙ICP备2022016688号-1"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="/img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+          
+          <span>浙ICP备2022016688号-1</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>CAV-and-FL</title>
+    <link href="/2022/10/07/CAV-and-FL/"/>
+    <url>/2022/10/07/CAV-and-FL/</url>
+    
+    <content type="html"><![CDATA[<h2 id="Paper-Read-Cybersecurity-Threats-in-Connected-and-Automated-Vehicles-basedFederated-Learning-Systems"><a href="#Paper-Read-Cybersecurity-Threats-in-Connected-and-Automated-Vehicles-basedFederated-Learning-Systems" class="headerlink" title="Paper Read-Cybersecurity Threats in Connected and Automated Vehicles basedFederated Learning Systems"></a>Paper Read-<strong>Cybersecurity Threats in Connected and Automated Vehicles based</strong>Federated Learning Systems</h2><h2 id="Basic-Detail"><a href="#Basic-Detail" class="headerlink" title="Basic Detail"></a>Basic Detail</h2><table><thead><tr><th>author</th><th>Ranwa Al Mallah,Ranwa Al Mallah</th><th></th></tr></thead><tbody><tr><td><strong>date</strong></td><td><strong>July 11-17, 2021</strong></td><td></td></tr><tr><td><strong>link</strong></td><td><a href="https://ieeexplore.ieee.org/abstract/document/9669214">paper_link</a></td><td></td></tr><tr><td><strong>from</strong></td><td><strong>IEEE Intelligent Vehicles Symposium Workshops</strong></td><td></td></tr></tbody></table><h2 id="Main-Point"><a href="#Main-Point" class="headerlink" title="Main Point"></a>Main Point</h2><p>本文提出了对于自动驾驶网络(<strong>Connected and Automated Vehicles</strong>) CAV的两种攻击方式，主要用于降低联邦全局模型的收敛过程甚至无法收敛，并且呼吁对这种场景的联邦学习建立保护机制。</p><h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>和传统固定的网络相比，由于无线移动网络的特性，如高速节点的移动和迅速改变的拓扑，所以存在着一定的威胁。目前对于CAV的联邦学习架构尚且没有一定的机制和思考去避免联邦学习过程中的攻击。在CAV中各个设备学习的安全不能得到保障。</p><h2 id="Paper-Progress"><a href="#Paper-Progress" class="headerlink" title="Paper Progress"></a>Paper Progress</h2><p>本文主要提出了两种攻击的方法来表示在受攻击时联邦学习所受的影响。攻击的主要目的是为了让联邦学习模型不能快速的收敛，甚至不能收敛。</p><ul><li><strong>Standard falsifified information attack</strong></li></ul><p>  标准攻击 即 某辆车持续不断的上传错误的梯度信息，这种情况车辆的信息ID等信息是真实的，很难被察觉，但成本很低容易执行。</p><ul><li><p><strong>Sybil attack</strong></p><p>Sybil方式主要在一辆车上生成了多个虚假的ID信息并广播本地更新，这种方式的虚假信息在生成后在server随机选择client时会加大选择到虚假ID的概率，从而很容易影响到模型的正常收敛。</p></li><li><p>本文虚假信息更新方式就是使用随机sample的参数更新</p><blockquote><p>Create LM (i,t+1 )with random parameters sampled from a distribution;</p></blockquote></li></ul><h2 id="Coufuse-Point"><a href="#Coufuse-Point" class="headerlink" title="Coufuse Point"></a>Coufuse Point</h2><ul><li>为什么在移动的网络中更加需要进行对学习过程的保护？和一般家里的无线相比会更加频繁的连接断开，这会产生什么结果？</li></ul><h2 id="Inspiration-and-thinking"><a href="#Inspiration-and-thinking" class="headerlink" title="Inspiration and thinking"></a>Inspiration and thinking</h2><p>这篇论文发表于2021年，此时差分隐私，同态加密的方式保护数据是不是都已经在运用了，是否可以进行结合保护该场景的模型？</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>FL Car</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Non-IID FL</title>
+    <link href="/2022/10/07/Non-IID-FL/"/>
+    <url>/2022/10/07/Non-IID-FL/</url>
+    
+    <content type="html"><![CDATA[<p>Non IID FL</p><p>文章主要针对数据倾斜 non-IID情况下FL训练模型精确度大量下降的问题，提出可以使用EMD进行量化差异性，最后提出了一个解决方案，也就是利用一小部分的全局共享数据进行训练的提升。</p><p>文章提出精确度和集中是一个反比例关系</p><p>最后用实验证明只用共享5%的全局数据就可以提升30%的模型精确度</p><p><img src="https://cdn.ai2db.cn/img__2022-10-07_166917" alt="image-20221007215037613"></p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>FL Non-IID</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>图联邦</title>
+    <link href="/2022/10/07/%E5%9B%BE%E8%81%94%E9%82%A6/"/>
+    <url>/2022/10/07/%E5%9B%BE%E8%81%94%E9%82%A6/</url>
+    
+    <content type="html"><![CDATA[<h2 id="图联邦学习论文阅读"><a href="#图联邦学习论文阅读" class="headerlink" title="图联邦学习论文阅读"></a>图联邦学习论文阅读</h2><h3 id="图联邦学习的原因"><a href="#图联邦学习的原因" class="headerlink" title="图联邦学习的原因"></a>图联邦学习的原因</h3><ul><li>缺乏统一的公式算法能够覆盖各种各样的图联邦学习集和任务</li><li>现有联邦学习库没有能够对不同数据集和学习任务进行基准测试，一个公平好用的有标准数据的基准测试对于联邦图学习有关键的作用</li><li>基于模仿的联邦训练系统在对大规模隐私图数据集研究时效率低且不安全</li></ul><h3 id="本文提出创新"><a href="#本文提出创新" class="headerlink" title="本文提出创新"></a>本文提出创新</h3><ul><li>包含不同领域数据集的基准测试系统FedGraphNN</li><li>在确保安全和高效前提下提供工业界方便使用的API</li></ul><p>针对图联邦学习的架构每个客户端会有自己的图和对应的特征，因此不用透露出自己的隐私进行学习</p><blockquote><p> 涉及到聚集参数的办法有: FedAvg FedOPT FedGKT Decentralized FL</p></blockquote><h3 id="将现实世界应用分为三类并提供特别的支持"><a href="#将现实世界应用分为三类并提供特别的支持" class="headerlink" title="将现实世界应用分为三类并提供特别的支持"></a>将现实世界应用分为三类并提供特别的支持</h3><h4 id="Graph-level-FedGraphNN"><a href="#Graph-level-FedGraphNN" class="headerlink" title="Graph-level FedGraphNN"></a>Graph-level FedGraphNN</h4><p>图级别的联邦图学习，例如一些社交网络公司自己有单独的网络图一些生物公司自己有分子和蛋白质的图</p><h4 id="Subgraph-level-FedGraphNN"><a href="#Subgraph-level-FedGraphNN" class="headerlink" title="Subgraph-level FedGraphNN"></a>Subgraph-level FedGraphNN</h4><p>子图级别的联邦图学习，各个客户端只包含了整图的一部分，例如推荐系统的构建，各个公司占有一部分的图。还有是知识图谱的构建，各个机构部门只有一部分的图，只有整合全部的才可以生成完整的知识图谱。</p><h4 id="Node-level-FedGraphNN"><a href="#Node-level-FedGraphNN" class="headerlink" title="Node-level FedGraphNN"></a>Node-level FedGraphNN</h4><p>节点级别的联邦图学习，主要是社交网络中个人的数据是比较敏感的只有</p><h3 id="可以实现的分类预测功能"><a href="#可以实现的分类预测功能" class="headerlink" title="可以实现的分类预测功能"></a>可以实现的分类预测功能</h3><h4 id="图分类"><a href="#图分类" class="headerlink" title="图分类"></a>图分类</h4><p>例如在社交网络中的社区分类 这个任务主要用来对整个图的信息进行获取并且对特征</p><h4 id="连接预测"><a href="#连接预测" class="headerlink" title="连接预测"></a>连接预测</h4><p>也就是预估两个节点间存在边连接的概率，对于推荐系统和知识图谱这样的子图级别的联邦学习有重要的作用</p><h4 id="节点分类"><a href="#节点分类" class="headerlink" title="节点分类"></a>节点分类</h4><p>节点分类主要对于一些独立的个体节点进行标签的预测，例如疾病传播时个体的感染预测。</p><h3 id="工作总结"><a href="#工作总结" class="headerlink" title="工作总结"></a>工作总结</h3><p>总结的来说文章主要提出了两件事情</p><p>1、收集、分析、分类大量可获取的数据集对应到相应的联邦学习任务中去</p><p>2、通过提供新的划分方法和<code>关联元数据</code>标准化的处理和合成非独立同分布的数据集</p><h3 id="相关工作和挑战"><a href="#相关工作和挑战" class="headerlink" title="相关工作和挑战"></a>相关工作和挑战</h3><p>还是按照三种级别来讨论</p><ul><li>图级别的：作者认为分子机器学习在集合中是十分重要的因为很多机构都是小图，有提出为GNN处理异构特征的集群联邦学习框架的，也有提出了开发个去中心化的多任务学习框架</li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>graph_fl ml</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>fgml-learning</title>
+    <link href="/2022/09/10/fgml-learning/"/>
+    <url>/2022/09/10/fgml-learning/</url>
+    
+    <content type="html"><![CDATA[<p><img src="https://cdn.ai2db.cn/img__2022-09-10_342523" alt="image-20220910134905597"></p><h2 id="学习概况"><a href="#学习概况" class="headerlink" title="学习概况"></a>学习概况</h2><p>node embeddings ？节点的属性</p><p>KG-Based Alignment 是什么尚不理解。</p><p>什么是注意力机制？</p><h2 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h2><p>传统的联邦学习主要聚焦于欧几米的的图形数据 例如图像分类</p><blockquote><p>Euclidean data : Euclidean data最显著的特征就是<strong>有规则的空间结构</strong>，比如图片是规则的正方形栅格，比如语音是规则的一维序列。而这些数据结构能够用一维、二维的矩阵表示，卷积神经网络处理起来很高效。</p></blockquote><ul><li>FL with Structured Data : 客户端训练私有的结构化数据集 并且由中心服务来进行整合训练模型</li><li>Structured FL 客户端编程了一个节点 所有客户端间的连接变成了边</li></ul><p><img src="https://cdn.ai2db.cn/img__2022-09-10_911796" alt="image-20220910183952884"></p><h3 id="Cross-Client-Information-Reconstruction"><a href="#Cross-Client-Information-Reconstruction" class="headerlink" title="Cross-Client Information Reconstruction"></a>Cross-Client Information Reconstruction</h3><p>即部分图丢失修复的方案   现有技术可以分为 间接结果传输 和  丢失邻居生成</p><p>通过了一些没看明白的 GCN之类的公式 尚不理解L的表达是如何产生</p><p><img src="https://cdn.ai2db.cn/img__2022-09-10_761176" alt="image-20220910223645355"></p><p>丢失邻居生成则是将子图的一部分隐藏 用剩余的进行训练来预测数量和节点的特征信息，如下是损失函数L</p><p><img src="https://cdn.ai2db.cn/img__2022-09-10_435564" alt="image-20220910224604796"></p><p>上标d是表示数量 f 表示特征</p><h3 id="Overlapping-Instance-Alignment"><a href="#Overlapping-Instance-Alignment" class="headerlink" title="Overlapping Instance Alignment"></a>Overlapping Instance Alignment</h3><p>重叠实例的对其 分为同结构和非同结构 </p><h3 id="Non-IID-Data-Adaptation"><a href="#Non-IID-Data-Adaptation" class="headerlink" title="Non-IID Data Adaptation"></a>Non-IID Data Adaptation</h3><p>非独立同分布数据的采用</p><p>训练一个高效的全局模型 或者 为每个客户端专门训练个模型 </p><p>具体步骤为1、 定义个损失函数 2、重新配置权重 3、带入局部的模型</p><p>1、使用初始的全局模型，在进行几个局部模型的更新后很容易的被额外的模型适应</p><p>2、重新配置权重 ： 通过注意力机制重新计算权重使局部的模型和 全局模型接近</p><blockquote><p>注意力机制： </p></blockquote><p>3、添加到局部模型  把全局的平均权重和局部按比例相加</p><p><img src="https://cdn.ai2db.cn/img__2022-09-11_661371" alt="image-20220911134442331"></p><p>个性化的图机器学习</p><p>策略就是将相似数据分布的client聚集成一个组进行共享模型参数 例如GCFL通过一些准则将客户端集群。</p><h3 id="STRUCTURED-FL"><a href="#STRUCTURED-FL" class="headerlink" title="STRUCTURED FL"></a>STRUCTURED FL</h3><p>结构化的联邦学习 又分为了 去中心化和有中心的，</p><p>其中有中心服务端的需要通过收集 model parameters 或者 embeddings 计算后再返回给对应客户端 </p><p>去中心化结构则可通过邻居节点的参数来进行计算当前的梯度必要时加上本地的梯度</p><p><img src="https://cdn.ai2db.cn/img__2022-09-11_362557" alt="image-20220911142624734"></p><h2 id="具体案例场景"><a href="#具体案例场景" class="headerlink" title="具体案例场景"></a>具体案例场景</h2><ul><li>健康医疗： 目前很多医院的信息都很敏感而且隐私，通常存在某个当地医院本地数据库，而病人通常会去多个医院看病，如果需要训练一个图模型来预测就需要使用到联邦图学习。</li><li>交通：很多的交通信息十分的重要，为了能打造智慧城市，需要对车流量进行控制，减少城市的拥堵情况合理分配交通流量，所以我们需要进行数据进行上传中心服务训练模型进行联合预测。</li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>fgml 论文</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>specialized hardware solutions</title>
+    <link href="/2022/07/02/specialized-hardware-solutions/"/>
+    <url>/2022/07/02/specialized-hardware-solutions/</url>
+    
+    <content type="html"><![CDATA[<h2 id="当代计算趋势"><a href="#当代计算趋势" class="headerlink" title="当代计算趋势"></a>当代计算趋势</h2><p>1、模型数据处理越来越大数据化，数据处理依赖数据库，数据库快速响应需要好的利用硬件性能</p><p>2、算法的成功需要消费大量的数据，数据有效率处理变得重要，所以我们可以优化潜在的硬件来提升算法表现</p><p>3、单核处理器由于有限的时钟频率停滞发展，CPU逐渐变为多核，但是近些年由于晶体管的尺寸的物理限制发展变得缓慢。摩尔定律也变得慢了下来。</p><p>4、硬件逐渐变得专门化，例如ASIC就十分盛行，但是他造价昂贵知识在大型部署时会使用，GPU由于比CPU多核心处理，收到了深度神经网络使用的欢迎，谷歌还研发了TPU更快速的处理线性代数问题</p><p>5、FPGA很好的回答了既可以灵活又可以高表现的需求，已经被谷歌和亚马逊放在他们的数据中心。用来协助CPU或者用来链接服务器和网络</p><p>6、专用硬件集成到现有的服务可以产生较大的收益 </p><h2 id="研究的范围"><a href="#研究的范围" class="headerlink" title="研究的范围"></a>研究的范围</h2><h4 id="内存数据库中哪些负载可以用特殊的硬件来提高性能？"><a href="#内存数据库中哪些负载可以用特殊的硬件来提高性能？" class="headerlink" title="内存数据库中哪些负载可以用特殊的硬件来提高性能？"></a>内存数据库中哪些负载可以用特殊的硬件来提高性能？</h4><ul><li>数据库的hash操作，由于hash是各种操作的核心，而且属于计算密集型</li><li>数据的划分，在使用了健壮的hash函数后可以没有额外的时间消耗，并且特殊的芯片缓存可以提升随机访问的能力 by  performing targeted write-combining</li><li>量化的训练，在机器学习领域多是数据和计算密集型，由于CPU的ALU是为一般的计算设计的，如果基于FPGA那他的量化算法的优势会被体现出来</li></ul><h4 id="特别的硬件是否能提升数据库与计算密集和数据密集的集成？"><a href="#特别的硬件是否能提升数据库与计算密集和数据密集的集成？" class="headerlink" title="特别的硬件是否能提升数据库与计算密集和数据密集的集成？"></a>特别的硬件是否能提升数据库与计算密集和数据密集的集成？</h4><ul><li>机器学习结合到数据库有很多的好处，有些公司有很多现成的数据库数据，并且有训练模型管理的能力，并且机器学习提取数据更加的方便，也不需要额外的查询处理的副本。</li><li>列存储的数据结构更适合与机器学习，因为方便压缩，方便选择的查询，但是数据的压缩不太适合与机器学习</li><li>计算引擎可以结合数据模型直接客服压缩和加密的数据，CPU的流水线会由于解密占用主要时间，而FPGA的深度流水线会在一个平行的数据流中。</li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>论文</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>论文AI4DB</title>
+    <link href="/2022/05/28/%E8%AE%BA%E6%96%87AI4DB/"/>
+    <url>/2022/05/28/%E8%AE%BA%E6%96%87AI4DB/</url>
+    
+    <content type="html"><![CDATA[<h1 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h1><p>主要是使用AI技术 如机器学习、深度学习等对数据库的调优参数进行学习以完成达到自动调优的目标，降低对云数据库中大量数据库人工难以维护的场景。</p><h2 id="机器学习劣势"><a href="#机器学习劣势" class="headerlink" title="机器学习劣势"></a>机器学习劣势</h2><p>1、用管道架构来训练，模型在不同的场景表现时好时坏</p><p>2、训练模型需要巨大的高质量数据，有很多场景无法复现</p><p>3、不能很好的支持多参数的调优，因为场景太多了</p><h2 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h2><p>数据库-Env</p><p>内部指标-State</p><p>调优模型-Agent-采用神经网络进行模拟</p><p>调优行为-Action</p><p>表现变化-Reward</p><h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><p>强化学习和传统的监督学习不同，并不需要大量的高质量数据，使用action来对调优策略进行优化</p><h3 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h3><p>只能提供粗略的调优 负载 不能做到细致调优 特别的查询</p><p>QTune 就是用来解决这个问题的 它使用了双状态的深度学习模型既有action也有workload</p><p>它可以在按集群在相同集群推荐一样的参数 </p><h2 id="缓存调整"><a href="#缓存调整" class="headerlink" title="缓存调整"></a>缓存调整</h2><p>iBTune 采用深度学习调整缓存池大小 </p><p>用来针对个人的数据库实例 用来调整优化确保最小的数据库查询时延和吞吐</p><p>他主要采用的是成对的神经网络去预测延迟上界，输入包括当前数据库实例，调整缓存池大小后的数据库实例，每一个都包含了如CPU IO和当前时间的指标输出的是预期的响应时间。</p><p>如果预测的延迟太大就会进行调整内存大小</p><h2 id="索引自动选择"><a href="#索引自动选择" class="headerlink" title="索引自动选择"></a>索引自动选择</h2><p>文章讲述了索引在人工情况下选择和调整的不便，如果使用机器学习算法进行动态变化选取最优策略可以提升查询性能</p><p>AutoAdmin用来选取索引，使用枚举全部可加索引行，进行选取最高收益查询的K个，然后利用贪婪算法逐步的添加列不超过threshold</p><p>DB2把选择索引当做背包问题来解决，索引item是背包 获得的收益是背包重量</p><p>离线选择缺点：</p><ul><li>当系统的负载出现变化时候不能很好的调整，并且选择需要一定的经验，增加了负担</li></ul><h2 id="视图的自动生成"><a href="#视图的自动生成" class="headerlink" title="视图的自动生成"></a>视图的自动生成</h2><p>工具：View Advisor</p><p>主要有两点：1、候选视图的生成 2、视图的选择</p><p>视图生成</p><p>Dokeroglu 通过遗传算法辨别出公共常用的子查询进行视图生成最大化查询效率</p><p>Zilio 为解决通用化子查询的问题合并查询的条件 和相似的视图让同一个视图可以被更多查询使用</p><p>视图选择</p><p>视图选择工作量很大是个NP问题，需要选择最小的cost</p><p>Jindal提出BIGSUBS 分两步迭代 </p><ul><li>第一步：使用和基因算法中的变异操作类似的方法判定是否选择实例化该视图，根据视图耗费内存和视图能够减少查询的效能来判断</li><li>第二步 给每个查询进行评估使用哪个视图 并反馈给算法留在下一次迭代</li></ul><p>最后超过限定的迭代次数或者视图的对应已经不再变化</p><p>CLOUDVIEWS 使用于在线的分析，把选择视图看做是背包问题，但是主要作用于已经出现的负载对新发生的不能很好的运用</p><h2 id="SQL重写"><a href="#SQL重写" class="headerlink" title="SQL重写"></a>SQL重写</h2><p>传统SQL重写基于事先规则设定。而此处提出可以结合机器学习进行评估选择规则,并且用于训练新的场景。</p><h2 id="join-顺序选择"><a href="#join-顺序选择" class="headerlink" title="join 顺序选择"></a>join 顺序选择</h2><p>传统方法使用的dp算法进行选择，有较大的代价和较高的错误率</p><p>使用机器学习进行学习先前经验克服bias 其中又分为在线和离线</p><p>线下：</p><ul><li>LEO ，使用了一个两层的方法进行预估第一层是从数据库统计的信息，第二层是从过去执行分析的系统目录，然后再执行后对原先的参数和系统目录进行调整</li></ul><h2 id="数据库监控系统"><a href="#数据库监控系统" class="headerlink" title="数据库监控系统"></a>数据库监控系统</h2><ul><li>数据库健康监控<ul><li>他们认为有相似key的间歇性数据库的慢查询有一样的根本原因，所以他们先把失败的记录汇总，分配每一种一个原因，当出现慢sql时进行匹配，匹配到了就通知DBA，每一匹配到就再生成一种</li><li>P-Store, 采用主动的去监控数据库来适应变化</li></ul></li><li>数据库活动监控<ul><li>为了自动化的选择一些活动，而不是每次都触发造成大量数据库和监控系统的交互，Hagit提出了MAB(multi-armed bandits )  训练个策略获取到最大的风险分值 并且追踪</li></ul></li><li>数据库表现预测<ul><li>Marcus等人提出用深度学习来进行预测并发查询场景，包括父子操作之间或者平行计划，但由于采用了pipeline结构导致了数据丢失</li><li>周等人提出嵌入式图算法，使用图模型来特征化并发的查询，顶点是操作者，边是关系</li></ul></li></ul><h2 id="数据库安全"><a href="#数据库安全" class="headerlink" title="数据库安全"></a>数据库安全</h2><ul><li>数据库敏感数据发现<ul><li>传统通过用户定义的来取一个个发现过于麻烦工作量大，Bhaskar等人提出使用拉普拉斯模型进行根据数据调用的频率作为候选，再加上一定的噪声提高准确率</li></ul></li><li>访问控制<ul><li>传统的根据一定规则的限制很可能被先进的技术所破解攻击，Colombo等人提出基于意图的访问控制模型，自动化控制策略来访问数据</li></ul></li><li>SQL注入<ul><li>sql注入一直是数据库的具有危害性的问题，</li><li>Moises等人提出基于分类算法来检查SQL注入，训练样本使用sql注入的sql进行查询然后分级别分类。然而这个方法需要大量的训练数据并且不能泛化</li><li>Batista等人提出基于模糊神经网络用来辨别攻击的模式然后记住，</li></ul></li></ul><h2 id="模型推理的数据库技术"><a href="#模型推理的数据库技术" class="headerlink" title="模型推理的数据库技术"></a>模型推理的数据库技术</h2><ul><li>操作者支持</li><li>操作者选择</li><li>执行增强</li></ul><h2 id="目前的挑战"><a href="#目前的挑战" class="headerlink" title="目前的挑战"></a>目前的挑战</h2><h2 id="不理解的点"><a href="#不理解的点" class="headerlink" title="不理解的点"></a>不理解的点</h2><ul><li>OtterTune是什么意思</li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>论文</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>ml-learning-network</title>
+    <link href="/2022/05/06/ml-learning-01/"/>
+    <url>/2022/05/06/ml-learning-01/</url>
+    
+    <content type="html"><![CDATA[<h2 id="神经元和大脑"><a href="#神经元和大脑" class="headerlink" title="神经元和大脑"></a>神经元和大脑</h2><p><img src="/2022/05/06/ml-learning-01/image-20220506092538121.png" alt="image-20220506092538121"></p><p><img src="/2022/05/06/ml-learning-01/image-20220506092607246.png" alt="image-20220506092607246"></p><blockquote><p>有一种程序可以同时处理视觉和听觉 让大脑自己去学习</p></blockquote><blockquote><p> 我们的任务是找到大脑学习的算法，然后交给计算机</p></blockquote>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>ml</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>ml learning</title>
+    <link href="/2022/05/01/ml-learning/"/>
+    <url>/2022/05/01/ml-learning/</url>
+    
+    <content type="html"><![CDATA[<h2 id="1-hexo-常用命令"><a href="#1-hexo-常用命令" class="headerlink" title="1.hexo 常用命令"></a>1.hexo 常用命令</h2><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gauss">hexo <span class="hljs-keyword">new</span> [layout] &lt;<span class="hljs-built_in">title</span>&gt;<br></code></pre></td></tr></table></figure><p>eg: <code>hexo new &quot;post title with whitespace&quot;</code> 其中 layout为_config.yml中的默认参数值。</p><ul><li><code>-p --path</code> 自定义新文章</li><li><code>-r --replace</code> 存在同名文章，替换</li><li><code>-s --slug</code> 文章的slug，作为新文章的文件名和发布后的URL</li></ul><p>eg： <code>hexo new page --path about/me &quot;About me&quot;</code></p><h3 id="2-生成静态文件"><a href="#2-生成静态文件" class="headerlink" title="2. 生成静态文件"></a>2. 生成静态文件</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs verilog">hexo <span class="hljs-keyword">generate</span>` 或 `hexo g<br></code></pre></td></tr></table></figure><ul><li><code>-d 或--deploy</code> 文件生成后部署网站</li><li><code>-w 或--watch</code> 监视文件变动</li><li><code>-b 或--bail</code> 生成过程中出现异常则抛出。</li><li><code>-f 或--force</code> 强制重新生成文件</li><li><code>-c 或--concurrency</code> 最大同时生成文件数量，默认无限制。</li></ul><p><img src="https://cdn.ai2db.cn/img__2022-06-07_772613" alt="image-20220501171024432"></p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>ml, fresh</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="/2022/04/30/hello-world/"/>
+    <url>/2022/04/30/hello-world/</url>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  
+</search>
